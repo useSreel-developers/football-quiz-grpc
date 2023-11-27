@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 
 	"github.com/useSreel-developers/football-quiz-grpc/config"
 	"github.com/useSreel-developers/football-quiz-grpc/repository"
@@ -11,10 +12,6 @@ import (
 	"google.golang.org/grpc"
 
 	pb "github.com/useSreel-developers/football-quiz-grpc/proto"
-)
-
-const (
-	PORT = ":6779"
 )
 
 type QuestionServer struct {
@@ -45,7 +42,7 @@ func (s *QuestionServer) GetRandomQuestions(ctx context.Context, in *pb.Empty) (
 }
 
 func main() {
-	lis, err := net.Listen("tcp", PORT)
+	lis, err := net.Listen("tcp", os.Getenv("PORT"))
 	if err != nil {
 		log.Fatalf("Failed Connection: %v", err)
 	}
