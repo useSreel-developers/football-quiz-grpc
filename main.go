@@ -10,6 +10,7 @@ import (
 	"github.com/useSreel-developers/football-quiz-grpc/repository"
 	"github.com/useSreel-developers/football-quiz-grpc/service"
 	"google.golang.org/grpc"
+	"github.com/joho/godotenv"
 
 	pb "github.com/useSreel-developers/football-quiz-grpc/proto"
 )
@@ -42,6 +43,11 @@ func (s *QuestionServer) GetRandomQuestions(ctx context.Context, in *pb.Empty) (
 }
 
 func main() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Failed To Load .env File: %v", err)
+	}
+
 	lis, err := net.Listen("tcp", os.Getenv("PORT"))
 	if err != nil {
 		log.Fatalf("Failed Connection: %v", err)
