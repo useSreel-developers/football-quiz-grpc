@@ -17,7 +17,7 @@ func NewQuestionsRepositoryImpl(DB *gorm.DB) QuestionsRepository {
 
 func (u *QuestionsRepositoryImpl) GetRandomQuestions() []model.Question {
 	var questions []model.Question
-	result := u.DB.Find(&questions)
+	result := u.DB.Raw("SELECT * FROM questions ORDER BY RANDOM() LIMIT 10").Find(&questions)
 	helper.PanicIfError(result.Error)
 
 	return questions
